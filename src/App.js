@@ -1,28 +1,30 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component, Fragment } from 'react';
+import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
+import Campaign from './containers/Campaign';
+import CampaignList from './containers/CampaignList';
+import LoginForm from './components/LoginForm';
+import TopPanel from './components/TopPanel';
+import UserForm from './components/UserForm';
+import withAuth from './HOC/Auth';
+import withoutAuth from './HOC/AntiLogin';
 
 class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
-    );
-  }
+	render() {
+		return (
+			<Router>
+				<Fragment>
+					<Route path="/" component={TopPanel} />
+					<Switch>
+						<Route path="/login" component={withoutAuth(LoginForm)} />
+						<Route path="/register" component={withoutAuth(UserForm)} />
+						<Route exact path="/campaigns" component={withAuth(CampaignList)} />
+						<Route path="/campaigns/:id" component={withAuth(Campaign)} />
+						<Redirect from="/" to="/login" />
+					</Switch>
+				</Fragment>
+			</Router>
+		);
+	}
 }
 
 export default App;

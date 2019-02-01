@@ -1,0 +1,64 @@
+{
+    "env": {
+        "browser": true,
+        "commonjs": true,
+        "es6": true
+    },
+    "parser": "babel-eslint",
+    "extends": "eslint:recommended",
+    "parserOptions": {
+        "ecmaFeatures": {
+            "jsx": true
+        },
+        "ecmaVersion": 2018,
+        "sourceType": "module"
+    },
+    "plugins": [
+        "react"
+    ],
+    "rules": {
+        "react/jsx-curly-spacing": [ "warn", "never" ],
+        "react/jsx-uses-react": "error",
+        "react/jsx-uses-vars": "warn",
+        "no-console": 0,
+        "indent": [
+            "error",
+            "tab"
+        ],
+        "semi": [
+            "error",
+            "always"
+        ],
+        "curly": [ "error", "multi-or-nest", "consistent" ],
+        "array-bracket-newline": "error",
+        "array-bracket-spacing": [ "error", "always", { "objectsInArrays": false, "arraysInArrays": false }],
+        "block-spacing": "warn",
+        "brace-style": "error",
+        "comma-spacing": "warn",
+        "comma-style": "error",
+        "func-call-spacing": "error",
+        "func-style": [ "error", "declaration", { "allowArrowFunctions": true }],
+        "jsx-quotes": [ "error", "prefer-double" ],
+        "key-spacing": "warn",
+        "nonblock-statement-body-position": "warn",
+        "object-curly-newline": [ "error", {
+            "ObjectExpression": {
+                "multiline": true,
+                "minProperties": 3
+            },
+            "ObjectPattern": "never",
+            "ImportDeclaration": "never"
+        }],
+        "object-curly-spacing": [ "error", "always", {
+            "arraysInObjects": false,
+            "objectsInObjects": false
+        }],
+        "padded-blocks": [ "error", "never" ],
+        "space-before-blocks": "warn",
+        "arrow-body-style": [ "error", "as-needed" ],
+        "arrow-parens": [ "warn", "as-needed" ],
+        "arrow-spacing": "error",
+        "no-var": "error",
+        "prefer-arrow-callback": "warn"
+    }
+}
