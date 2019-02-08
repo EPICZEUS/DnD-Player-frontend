@@ -25,9 +25,7 @@ class CampaignDetail extends Component {
 	}
 
 	handleRedirect = e => {
-		if (e.target.dataset.action !== "delete") {
-			this.props.history.push(this.props.match.url + '/' + this.props.id);
-		}
+		if (e.target.dataset.action !== "delete") this.props.history.push(this.props.match.url + '/' + this.props.id);
 	}
 
 	render() {

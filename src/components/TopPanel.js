@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Button } from 'semantic-ui-react';
+import { Button, Image } from 'semantic-ui-react';
 
 class TopPanel extends Component {
 	handleLogout = () => {
@@ -11,30 +11,27 @@ class TopPanel extends Component {
 	}
 
 	render() {
-		// debugger;
-		const vals = this.props.location.pathname.split("/");
-
-		const last = Number(vals[vals.length - 1]);
-
-		// debugger;
-
 		return localStorage.token ? (
-			<Button.Group floated="right">
-				{!isNaN(last) && vals[vals.length - 2] === "campaigns" ? (
-					<Button>
-						New Character
+			<div>
+				<Button.Group floated="right">
+					<Button
+						onClick={() => this.props.history.push("/campaigns")}
+						size="small"
+					>
+						Campaigns
 					</Button>
-				) : null}
-				<Button
-					onClick={this.handleLogout}
-					size="small"
-					negative
-				>
-					Log out
-				</Button>
-			</Button.Group>
+					<Button
+						onClick={this.handleLogout}
+						size="small"
+						negative
+					>
+						Log out
+					</Button>
+				</Button.Group>
+				<Image avatar src={this.props.user.avatar_url} />
+			</div>
 		) : null;
 	}
 }
 
-export default connect()(TopPanel);
+export default connect(({ user }) => ({ user }))(TopPanel);

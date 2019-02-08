@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
 import { Grid } from 'semantic-ui-react';
+import Token from './Token';
 
 class GridMap extends Component {
 	createRows = () => {
 		const out = [];
 
-		for (let i = 0; i < 16; i++) {
+		for (let i = 1; i < 17; i++) {
 			out.push(
-				<Grid.Row style={{ height: 50 }} key={i}>
-					{this.createColumns()}
+				<Grid.Row style={{ height: "40px" }}key={i}>
+					{this.createColumns(i)}
 				</Grid.Row>
 			);
 		}
@@ -16,13 +17,30 @@ class GridMap extends Component {
 		return out;
 	}
 
-	createColumns = () => {
+	createColumns = y => {
 		const out = [];
 
-		for (let i = 0; i < 16; i++) {
+		for (let i = 1; i < 17; i++) {
+			const playable = this.props.characters.find(char => {
+				const position = char.positions.find(pos => pos.encounter.id === this.props.encounter_id);
+				return position.x === i && position.y === y;
+			}) || this.props.creatures.find(crea => {
+				const position = crea.positions.find(pos => pos.encounter.id === this.props.encounter_id);
+				return position.x === i && position.y === y;
+			});
+
+			let type;
+
+			if (playable) type = playable.user ? "character" : "creature";
+
+			// console.log("X", i, "Y", y, this.props.characters.some(char => {
+			// 	const position = char.positions.find(pos => pos.encounter_id === this.props.encounter_id)
+			// 	return position.x === i && position.y === y;
+			// }), playable)
+
 			out.push(
-				<Grid.Column style={{ width: 50 }} width={1} key={i}>
-					<div />
+				<Grid.Column style={{ width: "6.25%" }} width={1} key={i}>
+					<Token handleClick={this.props.handleClick} data={playable} type={type} />
 				</Grid.Column>
 			);
 		}
@@ -32,7 +50,7 @@ class GridMap extends Component {
 
 	render() {
 		return (
-			<Grid celled>
+			<Grid celled columns={16}>
 				{this.createRows()}
 			</Grid>
 		);

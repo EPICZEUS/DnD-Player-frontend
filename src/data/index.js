@@ -1,0 +1,42 @@
+export const HIT_DICE = {
+	Barbarian: 12,
+	Bard: 8,
+	Cleric: 8,
+	Druid: 8,
+	Fighter: 10,
+	Monk: 8,
+	Paladin: 10,
+	Ranger: 10,
+	Rogue: 8,
+	Sorcerer: 6,
+	Warlock: 8,
+	Wizard: 6
+};
+
+export const SPEED = {
+	Aasimar: '30 ft.',
+	Bugbear: '30 ft.',
+	Dragonborn: '30 ft.',
+	Dwarf: '25 ft.',
+	Elf: '30 ft.',
+	Firbolg: '30 ft.',
+	Genasi: '30 ft.',
+	Gith: '30 ft',
+	Gnome: '25 ft.',
+	Goblin: '30 ft.',
+	Goliath: '30 ft.',
+	Hobgoblin: '30 ft.',
+	'Half-elf': '30 ft.',
+	Halfling: '25 ft.',
+	'Half-Orc': '30 ft.',
+	Human: '30 ft.',
+	Kenku: '30 ft.',
+	Kobold: '30 ft.',
+	Lizardfolk: '30 ft.',
+	Orc: '30 ft.',
+	Tabaxi: '30 ft.',
+	Tiefling: '30 ft.',
+	Tortle: '30 ft.',
+	Triton: '30 ft., swim 30 ft.',
+	'Yuan-Ti Pureblood': '30 ft.'
+};

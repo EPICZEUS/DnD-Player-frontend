@@ -5,6 +5,7 @@ import CampaignList from './containers/CampaignList';
 import LoginForm from './components/LoginForm';
 import TopPanel from './components/TopPanel';
 import UserForm from './components/UserForm';
+import CharacterForm from './components/CharacterForm';
 import withAuth from './HOC/Auth';
 import withoutAuth from './HOC/AntiLogin';
 
@@ -18,7 +19,8 @@ class App extends Component {
 						<Route path="/login" component={withoutAuth(LoginForm)} />
 						<Route path="/register" component={withoutAuth(UserForm)} />
 						<Route exact path="/campaigns" component={withAuth(CampaignList)} />
-						<Route path="/campaigns/:id" component={withAuth(Campaign)} />
+						<Route exact path="/campaigns/:id" component={withAuth(Campaign)} />
+						<Route path="/campaigns/:campaign_id/characters/new" component={withAuth(CharacterForm)} />
 						<Redirect from="/" to="/login" />
 					</Switch>
 				</Fragment>

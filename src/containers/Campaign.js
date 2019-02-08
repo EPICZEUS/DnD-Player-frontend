@@ -7,7 +7,7 @@ import Encounter from './Encounter';
 class Campaign extends Component {
 	constructor(props) {
 		super(props);
-		
+
 		this.state = { ...this.props.campaigns.find(campaign => campaign.id === Number(this.props.match.params.id)) };
 	}
 
@@ -31,6 +31,7 @@ class Campaign extends Component {
 				<p>{this.state.description}</p>
 				<Encounter
 					match={this.props.match}
+					history={this.props.history}
 					owner={this.state.dm && this.state.dm.id === this.props.user.id}
 				/>
 

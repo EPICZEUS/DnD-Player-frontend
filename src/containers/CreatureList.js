@@ -8,7 +8,6 @@ class CreatureList extends Component {
 	state = { filter: "", selected: null }
 
 	handleClick = selected => this.setState({ selected })
-	handleChange = e => this.setState({ filter: e.target.value })
 
 	componentDidMount() {
 		if (this.props.creatures.length) return;
@@ -27,8 +26,10 @@ class CreatureList extends Component {
 		return (
 			<div>
 				<Input
+					icon="search"
+					fluid
 					placeholder="Filter..."
-					onChange={this.handleChange}
+					onChange={e => this.setState({ filter: e.target.value })}
 					value={this.state.filter}
 				/>
 				<Segment style={{ overflow: "auto", height: 700 }}>
@@ -36,7 +37,7 @@ class CreatureList extends Component {
 						{this.filteredCreatures().map(creature => <Creature key={creature.id} handleClick={this.handleClick} {...creature} />)}
 					</Card.Group>
 				</Segment>
-				<CreaturePanel {...this.props.creatures.find(creature => creature.id === this.state.selected)}/>
+				<CreaturePanel handleClick={this.props.handleClick} {...this.props.creatures.find(creature => creature.id === this.state.selected)}/>
 			</div>
 		);
 	}
