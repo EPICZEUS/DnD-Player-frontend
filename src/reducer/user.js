@@ -1,9 +1,11 @@
+import { LOGIN, LOGOUT } from '../constants';
+
 export default (user = {}, action) => {
 	switch(action.type) {
-	case "LOGIN":
+	case LOGIN:
 		localStorage.token = action.payload.token;
 		return action.payload.user;
-	case "LOGOUT":
+	case LOGOUT:
 		return null;
 	default: 
 		return user;

@@ -1,10 +1,12 @@
+import { LOAD_ENCOUNTERS, ADD_ENCOUNTER, UPDATE_ENCOUNTER } from '../constants';
+
 export default (encounters = [], action) => {
 	switch(action.type) {
-	case "LOAD_ENCOUNTERS":
+	case LOAD_ENCOUNTERS:
 		return action.payload;
-	case "ADD_ENCOUNTER":
+	case ADD_ENCOUNTER:
 		return [ ...encounters, action.payload ];
-	case "UPDATE_ENCOUNTER":
+	case UPDATE_ENCOUNTER:
 		// eslint-disable-next-line
 		const index = encounters.findIndex(encounter => encounter.id === action.payload.id);
 
