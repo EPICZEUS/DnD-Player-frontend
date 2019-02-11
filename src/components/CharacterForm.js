@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Form, Container } from 'semantic-ui-react';
 import { SPEED, HIT_DICE } from '../data';
+import { ADD_CHARACTER } from '../constants';
 
 let last = [];
 
@@ -291,7 +292,7 @@ class CharacterForm extends Component {
 		})
 			.then(r => r.json())
 			.then(payload => {
-				this.props.dispatch({ type: "ADD_CHARACTER", payload });
+				this.props.dispatch({ type: ADD_CHARACTER, payload });
 				this.props.history.push("/campaigns/" + this.props.match.params.campaign_id);
 			});
 	}

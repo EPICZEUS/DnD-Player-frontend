@@ -5,6 +5,7 @@ import CharacterList from './CharacterList';
 import CreatureList from './CreatureList';
 import GridMap from '../components/GridMap';
 import TokenController from './TokenController';
+import { LOAD_ENCOUNTERS, ADD_ENCOUNTER, UPDATE_ENCOUNTER } from '../constants';
 
 class Encounter extends Component {
 	state = {
@@ -27,7 +28,7 @@ class Encounter extends Component {
 		fetch("http://localhost:3000/api/v1/campaigns/" + this.props.match.params.id + "/encounters", { headers: { Authorization: "Bearer " + localStorage.token }})
 			.then(r => r.json())
 			.then(payload => {
-				this.props.dispatch({ type: "LOAD_ENCOUNTERS", payload });
+				this.props.dispatch({ type: LOAD_ENCOUNTERS, payload });
 				this.setState({
 					options: payload.map(encounter => ({
 						key: encounter.id,
@@ -52,7 +53,7 @@ class Encounter extends Component {
 				.then(r => r.json())
 				.then(data => {
 					console.log(data);
-					this.props.dispatch({ type: "ADD_ENCOUNTER", payload: data.encounter });
+					this.props.dispatch({ type: ADD_ENCOUNTER, payload: data.encounter });
 					this.setState({
 						...data.encounter,
 						activeToken: null,
@@ -113,7 +114,7 @@ class Encounter extends Component {
 			})
 				.then(r => r.json())
 				.then(data => {
-					this.props.dispatch({ type: "UPDATE_ENCOUNTER", payload: data.encounter });
+					this.props.dispatch({ type: UPDATE_ENCOUNTER, payload: data.encounter });
 					this.setState({ edit: false });
 				});
 		}
@@ -223,7 +224,7 @@ class Encounter extends Component {
 									characters: [],
 									creatures: [],
 									activeToken: null
-								})
+								});
 							}}>
 								New
 							</Button>

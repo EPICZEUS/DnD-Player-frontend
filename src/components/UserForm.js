@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Container, Form, Button } from 'semantic-ui-react';
+import { LOGIN } from '../constants';
 
 class UserForm extends Component {
 	constructor(props) {
@@ -28,7 +29,7 @@ class UserForm extends Component {
 		})
 			.then(r => r.json())
 			.then(payload => {
-				this.props.dispatch({ type: "LOGIN", payload });
+				this.props.dispatch({ type: LOGIN, payload });
 				this.props.history.push("/campaigns");
 			});
 	} 

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Container, Card, Form, Checkbox } from 'semantic-ui-react';
 import CampaignDetail from '../components/CampaignDetail';
+import { ADD_CAMPAIGN } from '../constants';
 
 class CampaignList extends Component {
 	state = {
@@ -24,7 +25,7 @@ class CampaignList extends Component {
 		})
 			.then(r => r.json())
 			.then(({ campaign: payload }) => {
-				this.props.dispatch({ type: "ADD_CAMPAIGN", payload });
+				this.props.dispatch({ type: ADD_CAMPAIGN, payload });
 				this.setState({
 					name: "",
 					description: "",

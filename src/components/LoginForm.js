@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Form, Container, Button } from 'semantic-ui-react';
+import { LOGIN } from '../constants';
 
 class LoginForm extends Component {
 	state = {
@@ -16,7 +17,7 @@ class LoginForm extends Component {
 		fetch("http://localhost:3000/api/v1/login", { headers: { Authorization }})
 			.then(r => r.json())
 			.then(payload => {
-				this.props.dispatch({ type: "LOGIN", payload });
+				this.props.dispatch({ type: LOGIN, payload });
 				this.props.history.push("/campaigns");
 			});
 	}

@@ -6,6 +6,7 @@ export default (user = {}, action) => {
 		localStorage.token = action.payload.token;
 		return action.payload.user;
 	case LOGOUT:
+		delete localStorage.token;
 		return null;
 	default: 
 		return user;

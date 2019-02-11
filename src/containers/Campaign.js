@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Container } from 'semantic-ui-react';
 import Encounter from './Encounter';
 // import Channel from './Channel';
+import { LOAD_CAMPAIGNS } from '../constants';
 
 class Campaign extends Component {
 	constructor(props) {
@@ -19,7 +20,7 @@ class Campaign extends Component {
 		fetch("http://localhost:3000/api/v1/campaigns", { headers: { Authorization: "Bearer " + localStorage.token }})
 			.then(r => r.json())
 			.then(payload => {
-				this.props.dispatch({ type: "LOAD_CAMPAIGNS", payload });
+				this.props.dispatch({ type: LOAD_CAMPAIGNS, payload });
 				this.setState({ ...this.props.campaigns.find(campaign => campaign.id === Number(this.props.match.params.id)) });
 			});
 	}

@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Button, Image } from 'semantic-ui-react';
+import { LOGOUT } from '../constants';
 
 class TopPanel extends Component {
 	handleLogout = () => {
-		delete localStorage.token;
-		this.props.dispatch({ type: "LOGOUT" });
+		this.props.dispatch({ type: LOGOUT });
 
 		this.props.history.push("/login");
 	}

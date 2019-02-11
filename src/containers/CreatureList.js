@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Card, Segment, Input } from 'semantic-ui-react';
 import Creature from '../components/Creature';
 import CreaturePanel from './CreaturePanel';
+import { LOAD_CREATURES } from '../constants';
 
 class CreatureList extends Component {
 	state = { filter: "", selected: null }
@@ -14,7 +15,7 @@ class CreatureList extends Component {
 
 		fetch("http://localhost:3000/api/v1/creatures", { headers: { Authorization: "Bearer " + localStorage.token }})
 			.then(r => r.json())
-			.then(payload => this.props.dispatch({ type: "LOAD_CREATURES", payload }));
+			.then(payload => this.props.dispatch({ type: LOAD_CREATURES, payload }));
 	}
 
 	filteredCreatures = () => this.props.creatures.filter(creature => creature.name.toLowerCase().includes(this.state.filter.toLowerCase())

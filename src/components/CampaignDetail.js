@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Card, Icon, Button } from 'semantic-ui-react';
+import { DELETE_CAMPAIGN } from '../constants';
 
 class CampaignDetail extends Component {
 	handleDelete = () => {
 		fetch("http://localhost:3000/api/v1/campaigns/" + this.props.id, { method: "DELETE", headers: { Authorization: "Bearer " + localStorage.token }});
-		this.props.dispatch({ type: "DELETE_CAMPAIGN", payload: this.props.id });
+		this.props.dispatch({ type: DELETE_CAMPAIGN, payload: this.props.id });
 	}
 
 	deleteButton = () => {
