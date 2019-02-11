@@ -17,11 +17,15 @@ class CharacterList extends Component {
 
 	handleClick = selected => this.setState({ selected })
 	
-	filteredCharacters = () => this.state.characters
-		.filter(char => !this.props.active.some(act => act.id === char.id))
-		.filter(char => char.name.toLowerCase().includes(this.state.filter)
-			|| char.char_class.toLowerCase().includes(this.state.filter)
-		)
+	filteredCharacters = () => {
+		let filtered = this.state.characters
+			.filter(char => !this.props.active.some(act => act.id === char.id))
+			.filter(char => char.name.toLowerCase().includes(this.state.filter) || char.char_class.toLowerCase().includes(this.state.filter))
+
+		if (this.props.user.id !== Number(this.props.match.params.id)) filtered = filtered.filter(char => char.user.id === this.props.user.id);
+
+		return filtered;
+	}
 
 	componentDidMount() {
 		if (this.props.characters.length > 1) return;
@@ -62,8 +66,8 @@ class CharacterList extends Component {
 	}
 }
 
-function mapState({ characters = []}) {
-	return { characters };
+function mapState({ characters = [], user }) {
+	return { characters, user };
 }
 
 export default connect(mapState)(CharacterList);

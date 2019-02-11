@@ -6,7 +6,7 @@ class GridMap extends Component {
 	createRows = () => {
 		const out = [];
 
-		for (let i = 1; i < 17; i++) {
+		for (let i = 16; i > 0; i--) {
 			out.push(
 				<Grid.Row style={{ height: "40px" }}key={i}>
 					{this.createColumns(i)}
@@ -40,7 +40,7 @@ class GridMap extends Component {
 
 			out.push(
 				<Grid.Column style={{ width: "6.25%" }} width={1} key={i}>
-					<Token handleClick={this.props.handleClick} data={playable} type={type} />
+					<Token handleClick={this.props.handleClick} data={playable} type={type} loggedIn={this.props.user} />
 				</Grid.Column>
 			);
 		}

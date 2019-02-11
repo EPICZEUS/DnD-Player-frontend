@@ -127,7 +127,7 @@ class Encounter extends Component {
 	}
 
 	handleSelect = (_, { value }) => {
-		this.setState({ ...this.props.encounters.find(encounter => encounter.id === value) });
+		this.setState({ ...this.props.encounters.find(encounter => encounter.id === value), activeToken: null });
 	}
 
 	handleTokenClick = obj => this.setState({ activeToken: obj })
@@ -136,7 +136,7 @@ class Encounter extends Component {
 		const token = this.state[type].find(token => token.id === id);
 		const position = token.positions.find(pos => pos.encounter.id === this.state.id);
 
-		if ((position.x > 1 && val) === -1 || (position.x < 16 && val === 1)) position.x += val;
+		if ((position.x > 1 && val === -1) || (position.x < 16 && val === 1)) position.x += val;
 
 		const payload = { ...this.state };
 
@@ -193,6 +193,7 @@ class Encounter extends Component {
 						updateX={this.updateX}
 						updateY={this.updateY}
 						encounter_id={this.state.id}
+						owner={this.props.owner}
 						{...this.state.activeToken}
 					/>
 					<Select
@@ -206,7 +207,15 @@ class Encounter extends Component {
 					{this.props.owner ? (
 						<Button.Group vertical>
 							<Button primary onClick={() => this.setState({ edit: !this.state.edit })}>Edit</Button>
-							<Button onClick={() => (
+							<Button onClick={() => {
+								this.state.characters.forEach(char => {
+									char.positions = char.positions.filter(pos => pos.encounter.id);
+								});
+
+								this.state.creatures.forEach(creature => {
+									creature.positions = creature.positions.filter(pos => pos.encounter.id);
+								});
+
 								this.setState({
 									id: null,
 									name: "",
@@ -215,7 +224,7 @@ class Encounter extends Component {
 									creatures: [],
 									activeToken: null
 								})
-							)}>
+							}}>
 								New
 							</Button>
 						</Button.Group>
@@ -241,6 +250,7 @@ class Encounter extends Component {
 					<Grid.Column width={10}>
 						{this.top()}
 						<GridMap
+							user={this.props.user}
 							encounter_id={this.state.id}
 							creatures={this.state.creatures}
 							characters={this.state.characters}
@@ -248,17 +258,21 @@ class Encounter extends Component {
 						/>
 					</Grid.Column>
 
-					<Grid.Column width={3}>
-						<CreatureList handleClick={this.handleAdd} />
-					</Grid.Column>
+					{
+						this.props.owner ? (
+							<Grid.Column width={3}>
+								<CreatureList handleClick={this.handleAdd} />
+							</Grid.Column>
+						) : null
+					}
 				</Grid.Row>
 			</Grid>
 		);
 	}
 }
 
-function mapState({ encounters = []}) {
-	return { encounters };
+function mapState({ encounters = [], user }) {
+	return { encounters, user };
 }
 
 export default connect(mapState)(Encounter);
