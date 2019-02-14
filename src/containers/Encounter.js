@@ -177,6 +177,8 @@ class Encounter extends Component {
 				},
 				body: JSON.stringify(position)
 			});
+		} else {
+			this.handleAdd(type, token);
 		}
 
 		// delete payload.activeToken;
@@ -203,6 +205,8 @@ class Encounter extends Component {
 				},
 				body: JSON.stringify(position)
 			});
+		} else {
+			this.handleAdd(type, token);
 		}
 
 		// delete payload.activeToken;
