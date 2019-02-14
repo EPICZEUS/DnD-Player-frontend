@@ -6,24 +6,19 @@ import * as serviceWorker from './serviceWorker';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import reducer from './reducer';
+import ws from './ws';
 
 const store = createStore(reducer);
-// const ws = new WebSocket("ws://localhost:3000/api/v1/cable");
 
-// ws.onopen = () => ws.send(JSON.stringify({
-// 	command: "subscribe",
-// 	identifier: JSON.stringify({ channel: "AppChannel" })
-// }));
+ws.addEventListener('message', message => {
+	const data = JSON.parse(message.data);
 
-// ws.onerror = console.error;
+	if (data.type === "ping") return;
 
-// ws.onmessage = message => {
-// 	const data = JSON.parse(message.data);
+	// console.log(message, data);
 
-// 	if (data.type === "ping") return;
-	
-// 	console.log(message, data);
-// };
+	if (data.message) store.dispatch(data.message);
+});
 
 // function reducer(state = {}, action) {
 // 	switch(action.type) {

@@ -12,11 +12,7 @@ class CreaturePanel extends Component {
 	handleChange = e => this.setState({ [e.target.name]: Number(e.target.value) })
 
 	handleClick = () => {
-		this.props.handleClick("characters", {
-			...this.props, handleClick: undefined,
-			position: this.state,
-			positions: [ ...this.props.positions, this.state ]
-		});
+		this.props.handleClick("characters", { ...this.props, positions: [ ...this.props.positions, this.state ]});
 	}
 
 	content = () => {

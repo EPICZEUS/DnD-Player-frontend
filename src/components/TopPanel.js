@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Button, Image } from 'semantic-ui-react';
+import { List, Image } from 'semantic-ui-react';
 import { LOGOUT } from '../constants';
 
 class TopPanel extends Component {
@@ -12,25 +12,22 @@ class TopPanel extends Component {
 
 	render() {
 		return localStorage.token ? (
-			<div>
-				<Button.Group floated="right">
-					<Button
-						onClick={() => this.props.history.push("/campaigns")}
-						size="small"
-					>
-						Campaigns
-					</Button>
-					<Button
-						onClick={this.handleLogout}
-						size="small"
-						negative
-					>
-						Log out
-					</Button>
-				</Button.Group>
-				<Image avatar src={this.props.user.avatar_url} />
-			</div>
-		) : null;
+			<List horizontal selection floated="right" id="top-panel">
+				<List.Item
+					onClick={() => this.props.history.push("/campaigns")}
+				>
+					Campaigns
+				</List.Item>
+				<List.Item
+					onClick={this.handleLogout}
+				>
+					Log out
+				</List.Item>
+				<List.Item>
+					<Image avatar src={this.props.user.avatar_url} />
+				</List.Item>
+			</List>
+		) : <div></div>;
 	}
 }
 

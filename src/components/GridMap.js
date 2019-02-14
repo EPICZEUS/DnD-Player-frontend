@@ -8,7 +8,7 @@ class GridMap extends Component {
 
 		for (let i = 16; i > 0; i--) {
 			out.push(
-				<Grid.Row style={{ height: "40px" }}key={i}>
+				<Grid.Row style={{ height: "40px" }} key={i}>
 					{this.createColumns(i)}
 				</Grid.Row>
 			);
@@ -22,10 +22,10 @@ class GridMap extends Component {
 
 		for (let i = 1; i < 17; i++) {
 			const playable = this.props.characters.find(char => {
-				const position = char.positions.find(pos => pos.encounter.id === this.props.encounter_id);
+				const position = char.positions.find(pos => !pos.encounter || pos.encounter.id === this.props.encounter_id);
 				return position.x === i && position.y === y;
 			}) || this.props.creatures.find(crea => {
-				const position = crea.positions.find(pos => pos.encounter.id === this.props.encounter_id);
+				const position = crea.positions.find(pos => !pos.encounter || pos.encounter.id === this.props.encounter_id);
 				return position.x === i && position.y === y;
 			});
 
@@ -39,7 +39,7 @@ class GridMap extends Component {
 			// }), playable)
 
 			out.push(
-				<Grid.Column style={{ width: "6.25%" }} width={1} key={i}>
+				<Grid.Column style={{ width: "6.25%" }} width={1} key={i + "" + y}>
 					<Token handleClick={this.props.handleClick} data={playable} type={type} loggedIn={this.props.user} />
 				</Grid.Column>
 			);

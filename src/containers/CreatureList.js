@@ -3,20 +3,11 @@ import { connect } from 'react-redux';
 import { Card, Segment, Input } from 'semantic-ui-react';
 import Creature from '../components/Creature';
 import CreaturePanel from './CreaturePanel';
-import { LOAD_CREATURES } from '../constants';
 
 class CreatureList extends Component {
 	state = { filter: "", selected: null }
 
 	handleClick = selected => this.setState({ selected })
-
-	componentDidMount() {
-		if (this.props.creatures.length) return;
-
-		fetch("http://localhost:3000/api/v1/creatures", { headers: { Authorization: "Bearer " + localStorage.token }})
-			.then(r => r.json())
-			.then(payload => this.props.dispatch({ type: LOAD_CREATURES, payload }));
-	}
 
 	filteredCreatures = () => this.props.creatures.filter(creature => creature.name.toLowerCase().includes(this.state.filter.toLowerCase())
 		|| creature.creature_type.toLowerCase().includes(this.state.filter)
@@ -33,7 +24,7 @@ class CreatureList extends Component {
 					onChange={e => this.setState({ filter: e.target.value })}
 					value={this.state.filter}
 				/>
-				<Segment style={{ overflow: "auto", height: 700 }}>
+				<Segment style={{ overflowY: "auto", height: 700 }}>
 					<Card.Group itemsPerRow={1}>
 						{this.filteredCreatures().map(creature => <Creature key={creature.id} handleClick={this.handleClick} {...creature} />)}
 					</Card.Group>

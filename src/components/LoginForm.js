@@ -1,13 +1,16 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Form, Container, Button } from 'semantic-ui-react';
+import { Form, Container, Button, Message } from 'semantic-ui-react';
 import { LOGIN } from '../constants';
 
 class LoginForm extends Component {
 	state = {
+		error: false,
 		username: "",
 		password: ""
 	}
+
+	handleChange = e => this.setState({ [e.target.name]: e.target.value, error: false })
 
 	handleSubmit = e => {
 		e.preventDefault();
@@ -15,24 +18,42 @@ class LoginForm extends Component {
 		const Authorization = "Basic " + btoa(this.state.username + ":" + this.state.password);
 
 		fetch("http://localhost:3000/api/v1/login", { headers: { Authorization }})
-			.then(r => r.json())
+			.then(async r => {
+				if (!r.ok) throw { response: r,  ...(await r.json()) };
+				return r.json();
+			})
 			.then(payload => {
 				this.props.dispatch({ type: LOGIN, payload });
 				this.props.history.push("/campaigns");
-			});
+			})
+			.catch(err => this.setState({ error: err.message }));
 	}
 
 	render() {
 		return (
 			<Container>
-				<Form onSubmit={this.handleSubmit}>
+				<Form onSubmit={this.handleSubmit} error={!!this.state.error}>
+					<Message error onDismiss={() => this.setState({ error: false })}>
+						<Message.Header>{this.state.error}</Message.Header>
+					</Message>
 					<Form.Field>
 						<label>Username</label>
-						<input onChange={e => this.setState({ username: e.target.value })} placeholder="Username..." />
+						<input
+							name="username"
+							value={this.state.username}
+							onChange={this.handleChange}
+							placeholder="Username..."
+						/>
 					</Form.Field>
 					<Form.Field>
 						<label>Password</label>
-						<input type="password" onChange={e => this.setState({ password: e.target.value })} placeholder="Password..." />
+						<input
+							type="password"
+							name="password"
+							value={this.state.password}
+							onChange={this.handleChange}
+							placeholder="Password..."
+						/>
 					</Form.Field>
 					<Button.Group vertical>
 						<Form.Button primary>Login</Form.Button>

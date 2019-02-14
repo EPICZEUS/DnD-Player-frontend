@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Container, Form, Button } from 'semantic-ui-react';
+import { Container, Form, Button, Message } from 'semantic-ui-react';
 import { LOGIN } from '../constants';
 
 class UserForm extends Component {
@@ -8,6 +8,7 @@ class UserForm extends Component {
 		super(props);
 
 		this.state = {
+			error: false,
 			username: props.username || "",
 			first_name: props.first_name || "",
 			password: "",
@@ -16,7 +17,7 @@ class UserForm extends Component {
 		};
 	}
 
-	handleChange = e => this.setState({ [e.target.name]: e.target.value })
+	handleChange = e => this.setState({ [e.target.name]: e.target.value, error: false })
 
 	handleSubmit = () => {
 		fetch("http://localhost:3000/api/v1/register", {
@@ -27,18 +28,28 @@ class UserForm extends Component {
 				'Accept': 'application/json'
 			}
 		})
-			.then(r => r.json())
+			.then(async r => {
+				if (!r.ok) throw { response: r, ...(await r.json()) };
+				return r.json();
+			})
 			.then(payload => {
 				this.props.dispatch({ type: LOGIN, payload });
 				this.props.history.push("/campaigns");
-			});
+			})
+			.catch(err => this.setState({ error: { props: err.errors, messages: err.messages }}));
 	} 
 
 	render() {
 		return (
 			<Container>
-				<Form onSubmit={this.handleSubmit} >
-					<Form.Field>
+				<Form onSubmit={this.handleSubmit} error={!!this.state.error} >
+					<Message error onDismiss={() => this.setState({ error: false })}>
+						<Message.Header>There was a problem creating your user.</Message.Header>
+						<Message.List>
+							{this.state.error && this.state.error.messages.map((err, i) => <Message.Item key={i}>{err}</Message.Item>)}
+						</Message.List>
+					</Message>
+					<Form.Field error={this.state.error && this.state.error.props.includes("username")}>
 						<label>Username</label>
 						<input 
 							name="username"
@@ -47,7 +58,7 @@ class UserForm extends Component {
 							onChange={this.handleChange}
 						/>
 					</Form.Field>
-					<Form.Field>
+					<Form.Field error={this.state.error && this.state.error.props.includes("password")}>
 						<label>Password</label>
 						<input
 							name="password"

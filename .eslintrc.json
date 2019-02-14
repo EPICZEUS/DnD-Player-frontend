@@ -17,10 +17,11 @@
         "react"
     ],
     "rules": {
+        "no-console": 0,
         "react/jsx-curly-spacing": [ "warn", "never" ],
         "react/jsx-uses-react": "error",
         "react/jsx-uses-vars": "warn",
-        "no-console": 0,
+        "no-unused-vars": "warn",
         "indent": [
             "error",
             "tab"

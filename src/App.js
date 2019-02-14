@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
+import { Header } from 'semantic-ui-react';
 import Campaign from './containers/Campaign';
 import CampaignList from './containers/CampaignList';
 import LoginForm from './components/LoginForm';
@@ -9,12 +10,17 @@ import CharacterForm from './components/CharacterForm';
 import withAuth from './HOC/Auth';
 import withoutAuth from './HOC/AntiLogin';
 
+import './index.css';
+
 class App extends Component {
 	render() {
 		return (
 			<Router>
 				<Fragment>
-					<Route path="/" component={TopPanel} />
+					<header>
+						<Header id="app-title" floated="left" as="h2">D&D Player</Header>
+						<Route path="/" component={TopPanel} />
+					</header>
 					<Switch>
 						<Route path="/login" component={withoutAuth(LoginForm)} />
 						<Route path="/register" component={withoutAuth(UserForm)} />

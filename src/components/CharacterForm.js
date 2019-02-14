@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Form, Container } from 'semantic-ui-react';
 import { SPEED, HIT_DICE } from '../data';
-import { ADD_CHARACTER } from '../constants';
+// import { ADD_CHARACTER } from '../constants';
 
 let last = [];
 
@@ -289,12 +289,10 @@ class CharacterForm extends Component {
 				'Accept': "application/json"
 			},
 			body
-		})
-			.then(r => r.json())
-			.then(payload => {
-				this.props.dispatch({ type: ADD_CHARACTER, payload });
-				this.props.history.push("/campaigns/" + this.props.match.params.campaign_id);
-			});
+		}).then(async r => {
+			if (!r.ok) throw { response: r, ...(await r.json()) };
+			this.props.history.push("/campaigns/" + this.props.match.params.campaign_id);
+		});
 	}
 
 	render() {
